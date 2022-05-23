@@ -80,14 +80,20 @@ x.head():
  
  accuracy
  
+ ![image](https://user-images.githubusercontent.com/94911373/169773429-ae51da19-4e63-4dda-8567-df98d08fccd2.png)
+
+ 
+ 
+ 
  
  
 
 
 
 PREDICTION
+ ![image](https://user-images.githubusercontent.com/94911373/169773504-2514316f-7f2a-4f58-9e8f-207a21290134.png)
 
-![Uploading image.png…]() 
+
 
 
 
