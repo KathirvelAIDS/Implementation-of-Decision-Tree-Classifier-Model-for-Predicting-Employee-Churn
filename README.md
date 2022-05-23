@@ -66,6 +66,9 @@ data.info():
 
 data.head() using label encoder:
 
+![image](https://user-images.githubusercontent.com/94911373/169772700-ad207c32-e9f2-4452-abb7-bb6d9885db14.png)
+
+
 
 
 x.head():
@@ -77,12 +80,17 @@ x.head():
  
  accuracy
  
- ![Uploading image.png…]()
+ 
+ 
+
 
 
 PREDICTION
 
-![Uploading image.png…]()
+![Uploading image.png…]() 
+
+
+
 
 
 
