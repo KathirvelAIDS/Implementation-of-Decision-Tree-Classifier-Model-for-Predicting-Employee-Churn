@@ -74,7 +74,8 @@ data.head() using label encoder:
 x.head():
 
 
-![image](https://user-images.githubusercontent.com/94911373/169772432-39dc0702-208c-4529-8bac-c7fdf7fc26b9.png)
+![image](https://user-images.githubusercontent.com/94911373/169773637-afc16ead-72e6-4cc3-97e2-a8dc6c1908da.png)
+
  
  
  
@@ -91,6 +92,8 @@ x.head():
 
 
 PREDICTION
+
+
  ![image](https://user-images.githubusercontent.com/94911373/169773504-2514316f-7f2a-4f58-9e8f-207a21290134.png)
 
 
