@@ -24,28 +24,46 @@ Program to implement the Decision Tree Classifier Model for Predicting Employee 
 Developed by: kathirvel.A
 RegisterNumber:  212221230047
 import pandas as pd
-data=pd.read_csv("Employee.csv")
-data.head()
+import matplotlib.pyplot as plt
+data = pd.read_csv("/content/Dataset-20230524.zip")
+data
+
 data.info()
+
 data.isnull().sum()
-data["left"].value_counts()
-from sklearn.preprocessing import LabelEncoder
-le=LabelEncoder()
-data["salary"]=le.fit_transform(data["salary"])
-data.head()
-x=data[["satisfaction_level","last_evaluation","number_project","average_montly_hours","time_spend_company","Work_accident","promotion_last_5years","salary"]]
-x.head()
-y=data["left"]
-from sklearn.model_selection import train_test_split
-x_train,x_test,y_train,y_test=train_test_split(x,y,test_size=0.2,random_state=100)
-from sklearn.tree import DecisionTreeClassifier
-dt=DecisionTreeClassifier(criterion="entropy")
-dt.fit(x_train,y_train)
-y_pred=dt.predict(x_test)
-from sklearn import metrics
-accuracy=metrics.accuracy_score(y_test,y_pred)
-accuracy
-dt.predict([[0.5,0.8,9,260,6,0,1,2]])
+
+from sklearn.cluster import KMeans
+wcss = []
+
+for i in range(1,11):
+    kmeans = KMeans(n_clusters = i,init = "k-means++")
+    kmeans.fit(data.iloc[:,3:])
+    wcss.append(kmeans.inertia_)
+
+plt.plot(range(1,11),wcss)
+plt.xlabel("No. of Clusters")
+plt.ylabel("wcss")
+plt.title("Elbow Method")
+
+km = KMeans(n_clusters = 5)
+km.fit(data.iloc[:,3:])
+
+y_pred = km.predict(data.iloc[:,3:])
+y_pred
+
+data["cluster"] = y_pred
+df0 = data[data["cluster"]==0]
+df1 = data[data["cluster"]==1]
+df2 = data[data["cluster"]==2]
+df3 = data[data["cluster"]==3]
+df4 = data[data["cluster"]==4]
+plt.scatter(df0["Annual Income (k$)"],df0["Spending Score (1-100)"],c="red",label="cluster0")
+plt.scatter(df1["Annual Income (k$)"],df1["Spending Score (1-100)"],c="yellow",label="cluster1")
+plt.scatter(df2["Annual Income (k$)"],df2["Spending Score (1-100)"],c="pink",label="cluster2")
+plt.scatter(df3["Annual Income (k$)"],df3["Spending Score (1-100)"],c="green",label="cluster3")
+plt.scatter(df4["Annual Income (k$)"],df4["Spending Score (1-100)"],c="purple",label="cluster4")
+plt.legend()
+plt.title("Customer Segments")
 */
 */
 ```
@@ -53,48 +71,50 @@ dt.predict([[0.5,0.8,9,260,6,0,1,2]])
 ## Output:
 data.head():
 
+![image](https://github.com/KathirvelAIDS/Implementation-of-Decision-Tree-Classifier-Model-for-Predicting-Employee-Churn/assets/94911373/73a42024-1c84-4e80-919e-af981f9640f6)
 
-![image](https://user-images.githubusercontent.com/94911373/169771837-8d2c15ff-5f4e-4a33-9dfb-5addf59f7cbc.png)
-  
-  
   
   
 data.info():
 
-![image](https://user-images.githubusercontent.com/94911373/169772180-bd8c80be-9e49-4e4b-9d48-f82a7632878c.png)
+![image](https://github.com/KathirvelAIDS/Implementation-of-Decision-Tree-Classifier-Model-for-Predicting-Employee-Churn/assets/94911373/880e8e02-e2ce-4a81-a9d0-7bd4e948cbb1)
 
 
-data.head() using label encoder:
-
-![image](https://user-images.githubusercontent.com/94911373/169772700-ad207c32-e9f2-4452-abb7-bb6d9885db14.png)
+NULL VALUES:
 
 
-
-
-x.head():
-
-
-![image](https://user-images.githubusercontent.com/94911373/169773637-afc16ead-72e6-4cc3-97e2-a8dc6c1908da.png)
-
- 
- 
- 
- accuracy
- 
- ![image](https://user-images.githubusercontent.com/94911373/169773429-ae51da19-4e63-4dda-8567-df98d08fccd2.png)
-
- 
- 
- 
- 
- 
+![image](https://github.com/KathirvelAIDS/Implementation-of-Decision-Tree-Classifier-Model-for-Predicting-Employee-Churn/assets/94911373/95b60e63-75d7-4f46-a698-ff1c2554eee1)
 
 
 
-PREDICTION
+
+ELBOW GRAPH:
 
 
- ![image](https://user-images.githubusercontent.com/94911373/169773504-2514316f-7f2a-4f58-9e8f-207a21290134.png)
+![image](https://github.com/KathirvelAIDS/Implementation-of-Decision-Tree-Classifier-Model-for-Predicting-Employee-Churn/assets/94911373/06e78297-a1af-412e-8ee0-b269228d9692)
+
+
+
+
+
+CLUSTER FORMATION:
+![image](https://github.com/KathirvelAIDS/Implementation-of-Decision-Tree-Classifier-Model-for-Predicting-Employee-Churn/assets/94911373/580c6fe2-1e3e-4055-9f8d-3ff905c3146b)
+
+
+
+
+PREDICICTED VALUE:
+
+
+![image](https://github.com/KathirvelAIDS/Implementation-of-Decision-Tree-Classifier-Model-for-Predicting-Employee-Churn/assets/94911373/9dc71537-8b49-42ca-a34f-4bb0d55c4be7)
+
+
+
+
+FINAL GRAPH(D/O):
+
+![image](https://github.com/KathirvelAIDS/Implementation-of-Decision-Tree-Classifier-Model-for-Predicting-Employee-Churn/assets/94911373/a758ab2e-af9d-4e48-ae2c-c4afbb818f14)
+
 
 
 
