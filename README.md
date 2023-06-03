@@ -24,98 +24,104 @@ Program to implement the Decision Tree Classifier Model for Predicting Employee 
 Developed by: kathirvel.A
 RegisterNumber:  212221230047
 import pandas as pd
-import matplotlib.pyplot as plt
-data = pd.read_csv("/content/Dataset-20230524.zip")
-data
+data=pd.read_csv("Employee.csv")
+
+data.head()
 
 data.info()
 
 data.isnull().sum()
 
-from sklearn.cluster import KMeans
-wcss = []
+data["left"].value_counts()
 
-for i in range(1,11):
-    kmeans = KMeans(n_clusters = i,init = "k-means++")
-    kmeans.fit(data.iloc[:,3:])
-    wcss.append(kmeans.inertia_)
+from sklearn.preprocessing import LabelEncoder
+le=LabelEncoder()
+data["salary"]=le.fit_transform(data["salary"])
+data.head()
 
-plt.plot(range(1,11),wcss)
-plt.xlabel("No. of Clusters")
-plt.ylabel("wcss")
-plt.title("Elbow Method")
+x=data[["satisfaction_level","last_evaluation","number_project","average_montly_hours","time_spend_company","Work_accident","promotion_last_5years","salary"]]
+x.head()
 
-km = KMeans(n_clusters = 5)
-km.fit(data.iloc[:,3:])
+y=data["left"]
 
-y_pred = km.predict(data.iloc[:,3:])
-y_pred
+from sklearn.model_selection import train_test_split
+x_train,x_test,y_train,y_test=train_test_split(x,y,test_size=0.2,random_state=100)
 
-data["cluster"] = y_pred
-df0 = data[data["cluster"]==0]
-df1 = data[data["cluster"]==1]
-df2 = data[data["cluster"]==2]
-df3 = data[data["cluster"]==3]
-df4 = data[data["cluster"]==4]
-plt.scatter(df0["Annual Income (k$)"],df0["Spending Score (1-100)"],c="red",label="cluster0")
-plt.scatter(df1["Annual Income (k$)"],df1["Spending Score (1-100)"],c="yellow",label="cluster1")
-plt.scatter(df2["Annual Income (k$)"],df2["Spending Score (1-100)"],c="pink",label="cluster2")
-plt.scatter(df3["Annual Income (k$)"],df3["Spending Score (1-100)"],c="green",label="cluster3")
-plt.scatter(df4["Annual Income (k$)"],df4["Spending Score (1-100)"],c="purple",label="cluster4")
-plt.legend()
-plt.title("Customer Segments")
-*/
+from sklearn.tree import DecisionTreeClassifier
+dt=DecisionTreeClassifier(criterion="entropy")
+dt.fit(x_train,y_train)
+y_pred=dt.predict(x_test)
+
+from sklearn import metrics
+accuracy=metrics.accuracy_score(y_test,y_pred)
+accuracy
+
+dt.predict([[0.5,0.8,9,260,6,0,1,2]])
 */
 ```
 
 ## Output:
-data.head():
-
-![image](https://github.com/KathirvelAIDS/Implementation-of-Decision-Tree-Classifier-Model-for-Predicting-Employee-Churn/assets/94911373/73a42024-1c84-4e80-919e-af981f9640f6)
-
-  
-  
-data.info():
-
-![image](https://github.com/KathirvelAIDS/Implementation-of-Decision-Tree-Classifier-Model-for-Predicting-Employee-Churn/assets/94911373/880e8e02-e2ce-4a81-a9d0-7bd4e948cbb1)
 
 
-NULL VALUES:
 
-
-![image](https://github.com/KathirvelAIDS/Implementation-of-Decision-Tree-Classifier-Model-for-Predicting-Employee-Churn/assets/94911373/95b60e63-75d7-4f46-a698-ff1c2554eee1)
+Initial data set:
 
 
 
 
-ELBOW GRAPH:
-
-
-![image](https://github.com/KathirvelAIDS/Implementation-of-Decision-Tree-Classifier-Model-for-Predicting-Employee-Churn/assets/94911373/06e78297-a1af-412e-8ee0-b269228d9692)
+![image](https://github.com/KathirvelAIDS/Implementation-of-Decision-Tree-Classifier-Model-for-Predicting-Employee-Churn/assets/94911373/b10d1575-3775-4533-b36c-8cbb84149aca)
 
 
 
 
+Data info:
 
-CLUSTER FORMATION:
-![image](https://github.com/KathirvelAIDS/Implementation-of-Decision-Tree-Classifier-Model-for-Predicting-Employee-Churn/assets/94911373/580c6fe2-1e3e-4055-9f8d-3ff905c3146b)
-
-
-
-
-PREDICICTED VALUE:
-
-
-![image](https://github.com/KathirvelAIDS/Implementation-of-Decision-Tree-Classifier-Model-for-Predicting-Employee-Churn/assets/94911373/9dc71537-8b49-42ca-a34f-4bb0d55c4be7)
+![image](https://github.com/KathirvelAIDS/Implementation-of-Decision-Tree-Classifier-Model-for-Predicting-Employee-Churn/assets/94911373/334715f2-5257-464f-b891-d1fec5130a1b)
 
 
 
 
-FINAL GRAPH(D/O):
-
-![image](https://github.com/KathirvelAIDS/Implementation-of-Decision-Tree-Classifier-Model-for-Predicting-Employee-Churn/assets/94911373/a758ab2e-af9d-4e48-ae2c-c4afbb818f14)
+Optimization of null values:
 
 
+![image](https://github.com/KathirvelAIDS/Implementation-of-Decision-Tree-Classifier-Model-for-Predicting-Employee-Churn/assets/94911373/78a999ed-d7b7-4fca-9dda-6d1850c44fbc)
+
+
+
+
+Assignment of x and y values:
+
+
+![image](https://github.com/KathirvelAIDS/Implementation-of-Decision-Tree-Classifier-Model-for-Predicting-Employee-Churn/assets/94911373/8ac7f8e0-ed6b-4d7b-ad4d-cdb9f3b5b99d)
+
+
+
+![image](https://github.com/KathirvelAIDS/Implementation-of-Decision-Tree-Classifier-Model-for-Predicting-Employee-Churn/assets/94911373/42f344a5-5a74-44e7-8b71-3bf1cfea6c67)
+
+
+
+
+Converting string literals to numerical values using label encoder:
+
+
+![image](https://github.com/KathirvelAIDS/Implementation-of-Decision-Tree-Classifier-Model-for-Predicting-Employee-Churn/assets/94911373/5ca5f9c6-358a-42ad-92cb-e1828dfd8a84)
+
+
+
+
+Accuracy:
+
+
+
+![image](https://github.com/KathirvelAIDS/Implementation-of-Decision-Tree-Classifier-Model-for-Predicting-Employee-Churn/assets/94911373/8fbe82b6-3b12-4a03-829f-4dcdd8e9ff01)
+
+
+
+
+Prediction:
+
+
+![image](https://github.com/KathirvelAIDS/Implementation-of-Decision-Tree-Classifier-Model-for-Predicting-Employee-Churn/assets/94911373/1d1691ed-d0c4-4205-88b3-3610956b79ed)
 
 
 
